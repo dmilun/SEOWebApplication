@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "SEO Search";
 }
 
 <div class="text-center">
@@ -60,6 +60,59 @@
 
             return true;
         }
+
+        function displayErrorMessges(errorMessage) {
+            var $initialDiv = $('<div/>').addClass("m-1 text-danger").append("<span/>").text("ERROR MESSAGE:")
+            $("#result").append($initialDiv);
+            $.each(errorMessage, function (key, value) {
+                var $div = $('<div/>').addClass("m-1 text-danger").append("<span/>").text(value)
+                $("#result").append($div);
+            });
+        }
+
+        function DispalyResults(){
+            var keyWords = $("#keyWords").val();
+            var urlSearch = $("#urlSearch").val();
+            var numOfSearchResults = $("#numOfSearchResults").val();
+
+            $.ajax({
+                url: "/Home/GetSearchResults",
+                type: "GET",
+                data: {
+                    "keyWords": keyWords,
+                    "urlSearch": urlSearch,
+                    "numOfSearchResults": numOfSearchResults
+                },
+                success: function (response) {
+                    $("#spinner").hide();
+                    if (response.hasErrors){
+                        var errors = response.errorMessages;
+                        displayErrorMessges(errors);
+                    }
+                    else{
+                        var data = response.data;
+                        if (data[0] === 0) {
+                            let output = "NO SEO Locations for " + urlSearch;
+                            var $div = $('<div/>').addClass("m-4").append("<span/>").text(output)
+                            $("#result").append($div);
+                        }
+                        else {
+                            for (let i = 0; i < data.length; i++) {
+                                let output = "SEO Locations for " + urlSearch + "is position: " + data[i];
+                                var $div = $('<div/>').addClass("m-4").append("<span/>").text(output)
+                                $("#result").append($div);
+                                //alert(response[i]);
+                            }
+                        }
+                    }
+                },
+                error: function (xhr) {
+                    $("#spinner").hide();
+                    alert(xhr);
+                }
+            });
+        }
+
         $(function () {
             $("#spinner").hide();
 
@@ -68,48 +121,11 @@
                 errorMessage = []; //Need to reset
                 validateForm();
                 if (errorMessage.length > 0) {
-                    var $initialDiv = $('<div/>').addClass("m-1 text-danger").append("<span/>").text("ERROR MESSAGE:")
-                    $("#result").append($initialDiv);
-                    $.each(errorMessage, function (key, value) {
-                        var $div = $('<div/>').addClass("m-1 text-danger").append("<span/>").text(value)
-                        $("#result").append($div);
-                    });
+                    displayErrorMessges(errorMessage);
                 }
                 else{
-                    $("#spinner").show();                    
-                    var keyWords = $("#keyWords").val();
-                    var urlSearch = $("#urlSearch").val();
-                    var numOfSearchResults = $("#numOfSearchResults").val();
-
-                    $.ajax({
-                        url: "/Home/GetSearchResults",
-                        type: "GET",
-                        data: {
-                            "keyWords": keyWords,
-                            "urlSearch": urlSearch,
-                            "numOfSearchResults": numOfSearchResults
-                        },
-                        success: function (response) {
-                            $("#spinner").hide();
-                            if (response.length === 0) {
-                                let output = "NO SEO Locations for " + urlSearch;
-                                var $div = $('<div/>').addClass("m-4").append("<span/>").text(output)
-                                $("#result").append($div);
-                            }
-                            else {
-                                for (let i = 0; i < response.length; i++) {
-                                    let output = "SEO Locations for " + urlSearch + "is position: " + response[i];
-                                    var $div = $('<div/>').addClass("m-4").append("<span/>").text(output)
-                                    $("#result").append($div);
-                                    //alert(response[i]);
-                                }
-                            }
-                        },
-                        error: function (xhr) {
-                            $("#spinner").hide();
-                            alert(xhr);
-                        }
-                    });
+                    $("#spinner").show();
+                    DispalyResults();
                 }                
             });
         });

@@ -7,8 +7,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddHttpClient<IGoogleSearchService, GoogleSearchService>();
-builder.Services.AddScoped<IScrapeHtml, ScrapeHtml>();
+builder.Services.AddScoped<IScrapeHtml, ScrapeHtmlUsingHref>();
 builder.Services.AddScoped<ICleanHtml, CleanHtml>();
+builder.Services.AddScoped<ISearchList, SearchList>();
 
 var app = builder.Build();
 
