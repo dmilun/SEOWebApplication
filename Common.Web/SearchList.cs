@@ -17,25 +17,32 @@ namespace Common.Web
         /// <param name="searchString"></param>
         /// <param name="items"></param>
         /// <returns></returns>
-        public List<int> GetResults(string searchString, List<string> items)
+        public string GetResults(string searchString, List<string> items)
         {
-            var lstResults = new List<int>();
+            var result = string.Empty;
+            //var lstResults = new List<int>();
 
             for (int i = 0; i < items.Count; i++)
             {
                 if (items[i].Contains(searchString))
                 {
-                    lstResults.Add(i + 1); //Need to add 1 as the loop is zero based
+                    //lstResults.Add(i + 1); //Need to add 1 as the loop is zero based
+                    result = result + $"{i + 1}, ";
+
                 }
             }
 
-            //If we did not find any results, return a zero
-            if (!lstResults.Any()) 
-            { 
-                lstResults.Add(0);
+            if (string.IsNullOrEmpty(result))
+            {
+                return "0";
             }
+            ////If we did not find any results, return a zero
+            //if (!lstResults.Any()) 
+            //{ 
+            //    lstResults.Add(0);
+            //}
 
-            return lstResults;
+            return result.Substring(0, result.Length-2);
         }
     }
 }

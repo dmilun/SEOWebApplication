@@ -9,13 +9,13 @@
             <div class="col">
                 <div class="mb-3">
                     <label class="form-label"><span class="text-danger">*</span>&nbsp;&nbsp;Searchable Key Words: ex efiling integration </label>
-                    <input type="text" class="form-control" id="keyWords">
+                    <input type="text" class="form-control" id="keyWords" value="efiling integration">
                 </div>
             </div>
             <div class="col">
                 <div class="mb-3">
                     <label class="form-label"><span class="text-danger">*</span>&nbsp;&nbsp;URL: ex www.infotrack.com</label>
-                    <input type="text" class="form-control" id="urlSearch">
+                    <input type="text" class="form-control" id="urlSearch" value="www.infotrack.com">
                 </div>
             </div>
             <div class="col">
@@ -91,18 +91,15 @@
                     }
                     else{
                         var data = response.data;
-                        if (data[0] === 0) {
-                            let output = "NO SEO Locations for " + urlSearch;
+                        if (data === "0") {
+                            let output = "NO SEO Locations found for " + urlSearch +": " + data;
                             var $div = $('<div/>').addClass("m-4").append("<span/>").text(output)
                             $("#result").append($div);
                         }
                         else {
-                            for (let i = 0; i < data.length; i++) {
-                                let output = "SEO Locations for " + urlSearch + "is position: " + data[i];
-                                var $div = $('<div/>').addClass("m-4").append("<span/>").text(output)
-                                $("#result").append($div);
-                                //alert(response[i]);
-                            }
+                            let output = "SEO Locations for " + urlSearch + "is position: " + data;
+                            var $div = $('<div/>').addClass("m-4").append("<span/>").text(output)
+                            $("#result").append($div);
                         }
                     }
                 },

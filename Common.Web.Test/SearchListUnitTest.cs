@@ -8,11 +8,11 @@ namespace Common.Web.Test
         /// This test will read in a sample HTML file that does have search results and Hrefs and parse it based on the logic inside of ScrapeHtml and should find results
         /// </summary>
         [Theory]
-        [InlineData("www.infotrack.com", new int[] { 1, 2 })]
-        [InlineData("www.onelegal.com", new int[] { 5 })]
-        [InlineData("www.mycase.com", new int[] { 9 })]
-        [InlineData("www.leap.us", new int[] { 8 })]
-        public void SearchListForSpecificUrl(string Url, int[] actual)
+        [InlineData("www.infotrack.com", "1, 2")]
+        [InlineData("www.onelegal.com", "5")]
+        [InlineData("www.mycase.com", "9")]
+        [InlineData("www.leap.us", "8")]
+        public void SearchListForSpecificUrl(string Url, string actual)
         {
             var filename = "./Resources/SampleGoogleSearch.html";
 
@@ -30,7 +30,7 @@ namespace Common.Web.Test
             var result = searchList.GetResults(Url, items);
 
             //Assert 
-            Assert.Equal(result.ToArray(), actual);
+            Assert.Equal(result, actual);
 
         }
         /// <summary>
@@ -38,8 +38,8 @@ namespace Common.Web.Test
         /// based on the logic inside of ScrapeHtml and wil not find results as the URL does not exist
         /// </summary>
         [Theory]
-        [InlineData("www.idonotexist.com", new int[] { 0 })]
-        public void SearchListForSpecificUrlThatDoesNotExist(string Url, int[] actual)
+        [InlineData("www.idonotexist.com", "0")]
+        public void SearchListForSpecificUrlThatDoesNotExist(string Url, string actual)
         {
             var filename = "./Resources/SampleGoogleSearch.html";
 
@@ -57,7 +57,7 @@ namespace Common.Web.Test
             var result = searchList.GetResults(Url, items);
 
             //Assert 
-            Assert.Equal(result.ToArray(), actual);
+            Assert.Equal(result, actual);
 
         }
     }
