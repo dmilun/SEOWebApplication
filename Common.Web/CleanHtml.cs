@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Common.Web
 {
     /// <summary>
-    /// This class is used to help remove sections from the HTML file to make it smaller for searching
+    /// This class is used to help remove sections from the HTML file to make it smaller for searching and allow for using css classes and prevent false positives.
     /// </summary>
     public class CleanHtml : ICleanHtml
     {

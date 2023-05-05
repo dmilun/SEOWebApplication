@@ -43,6 +43,7 @@ namespace WebApplication1.Controllers
             try
             {
                 //This check will make sure all required fields are avaliable
+                //Need to do a santy check here as well, check for null values and return error message.
                 var errors = ValidateGetSearchResultsParams(keyWords, urlSearch, numOfSearchResults);
                 if (errors.Any())
                 {
@@ -51,8 +52,7 @@ namespace WebApplication1.Controllers
                     response.ErrorMessages = errors;
                     return response;
                 }
-                //Need to do a santy check here as well, check for null values and return error message.
-
+                
                 var topResults = 100;
                 if (numOfSearchResults > 0 && numOfSearchResults <= 100)
                 {
