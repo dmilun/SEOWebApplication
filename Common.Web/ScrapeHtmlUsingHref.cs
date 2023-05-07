@@ -30,7 +30,6 @@ namespace Common.Web
                 }
                 int end = html.IndexOf(">", start);
 
-                // TODO: might want to combime this
                 var endSubString = end - (start + "href=\"/url?q=".Length);
                 aElements.Add(html.Substring(start + "href=\"/url?q=".Length, endSubString));
 

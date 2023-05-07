@@ -20,13 +20,11 @@ namespace Common.Web
         public string GetResults(string searchString, List<string> items)
         {
             var result = string.Empty;
-            //var lstResults = new List<int>();
 
             for (int i = 0; i < items.Count; i++)
             {
                 if (items[i].Contains(searchString))
                 {
-                    //lstResults.Add(i + 1); //Need to add 1 as the loop is zero based
                     result = result + $"{i + 1}, ";
 
                 }
@@ -36,11 +34,6 @@ namespace Common.Web
             {
                 return "0";
             }
-            ////If we did not find any results, return a zero
-            //if (!lstResults.Any()) 
-            //{ 
-            //    lstResults.Add(0);
-            //}
 
             return result.Substring(0, result.Length-2);
         }

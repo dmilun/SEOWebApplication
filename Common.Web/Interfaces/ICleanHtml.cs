@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Common.Web.Interface
 {
+    /// <summary>
+    /// This interface will be used to create classes to clean and sanatize html.
+    /// </summary>
     public interface ICleanHtml
     {
         string RemoveScriptTagsFromHtmlString(string Html);

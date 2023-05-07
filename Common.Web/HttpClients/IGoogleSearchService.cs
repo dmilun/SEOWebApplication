@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Common.Web.HttpClients
 {
+    /// <summary>
+    /// This interface will be used to create the HTTP client to connect to google search
+    /// </summary>
     public interface IGoogleSearchService
     {
         string GetSearchResultsAsHtmlString(string keyWords, int topResults = 100);
